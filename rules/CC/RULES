@@ -22,7 +22,8 @@
     , "PATH"
     , "SYSTEM_TOOLS"
     ]
-  , "config_vars": ["ARCH", "HOST_ARCH", "TARGET_ARCH", "DEBUG"]
+  , "config_vars":
+    ["ARCH", "HOST_ARCH", "TARGET_ARCH", "DEBUG", "FORCE_DISABLE_INCLUDE_SCAN"]
   , "field_doc":
     { "base": ["Other targets (using the same rule) to inherit values from."]
     , "toolchain":
@@ -119,11 +120,17 @@
     , "cflags-files-deps": "cflags-files-deps"
     , "ldflags-files-deps": "ldflags-files-deps"
     , "for host": ["transitions", "for host"]
+    , "include_scan_build": ["transitions", "include_scan_build"]
     , "debug-deps": "debug-deps"
     }
   , "config_transitions":
     { "toolchain": [{"type": "CALL_EXPRESSION", "name": "for host"}]
-    , "include_scanner": [{"type": "CALL_EXPRESSION", "name": "for host"}]
+    , "include_scanner":
+      { "type": "if"
+      , "cond": {"type": "var", "name": "FORCE_DISABLE_INCLUDE_SCAN"}
+      , "then": []
+      , "else": [{"type": "CALL_EXPRESSION", "name": "include_scan_build"}]
+      }
     }
   , "expression":
     { "type": "let*"
@@ -211,18 +218,25 @@
       , ["default", {"type": "empty_map"}]
       , [ "INCLUDE_SCANNER"
         , { "type": "if"
-          , "cond": {"type": "FIELD", "name": "include_scanner"}
-          , "then":
-            { "type": "let*"
-            , "bindings":
-              [ ["fieldname", "include_scanner"]
-              , ["transition", {"type": "CALL_EXPRESSION", "name": "for host"}]
-              ]
-            , "body": {"type": "CALL_EXPRESSION", "name": "artifacts"}
-            }
+          , "cond": {"type": "var", "name": "FORCE_DISABLE_INCLUDE_SCAN"}
+          , "then": {"type": "empty_map"}
           , "else":
-            { "type": "disjoint_map_union"
-            , "$1": {"type": "CALL_EXPRESSION", "name": "base-provides-list"}
+            { "type": "if"
+            , "cond": {"type": "FIELD", "name": "include_scanner"}
+            , "then":
+              { "type": "let*"
+              , "bindings":
+                [ ["fieldname", "include_scanner"]
+                , [ "transition"
+                  , {"type": "CALL_EXPRESSION", "name": "include_scan_build"}
+                  ]
+                ]
+              , "body": {"type": "CALL_EXPRESSION", "name": "artifacts"}
+              }
+            , "else":
+              { "type": "disjoint_map_union"
+              , "$1": {"type": "CALL_EXPRESSION", "name": "base-provides-list"}
+              }
             }
           }
         ]

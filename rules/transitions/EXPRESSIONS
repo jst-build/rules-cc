@@ -119,4 +119,18 @@
     , "else": {"type": "CALL_EXPRESSION", "name": "for host"}
     }
   }
+, "include_scan_build":
+  { "vars": ["ARCH", "HOST_ARCH", "TARGET_ARCH"]
+  , "imports": {"for host": "for host"}
+  , "expression":
+    { "type": "map_union"
+    , "$1":
+      [ {"type": "CALL_EXPRESSION", "name": "for host"}
+      , { "type": "singleton_map"
+        , "key": "FORCE_DISABLE_INCLUDE_SCAN"
+        , "value": true
+        }
+      ]
+    }
+  }
 }
