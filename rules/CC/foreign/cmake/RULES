@@ -258,6 +258,21 @@
               ]
             }
           , "cmd": [{"type": "var", "name": "sh"}, "-c", ":"]
+          , "label":
+            { "type": "join"
+            , "$1":
+              [ "Extracting CMake "
+              , { "type": "join_cmd"
+                , "$1":
+                  { "type": "++"
+                  , "$1":
+                    [ {"type": "FIELD", "name": "out_files"}
+                    , {"type": "FIELD", "name": "out_dirs"}
+                    ]
+                  }
+                }
+              ]
+            }
           , "outs": {"type": "var", "name": "installed_out_files"}
           , "out_dirs": {"type": "var", "name": "installed_out_dirs"}
           }
@@ -696,6 +711,22 @@
               ]
             }
           , "cmd": [{"type": "var", "name": "sh"}, "-c", ":"]
+          , "label":
+            { "type": "join"
+            , "$1":
+              [ "Extracting CMake "
+              , { "type": "join_cmd"
+                , "$1":
+                  { "type": "++"
+                  , "$1":
+                    [ {"type": "FIELD", "name": "out_libs"}
+                    , {"type": "FIELD", "name": "out_hdrs"}
+                    , {"type": "FIELD", "name": "out_hdr_dirs"}
+                    ]
+                  }
+                }
+              ]
+            }
           , "outs": {"type": "var", "name": "installed_files"}
           , "out_dirs": {"type": "var", "name": "installed_dirs"}
           }

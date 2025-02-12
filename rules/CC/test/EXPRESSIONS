@@ -181,6 +181,11 @@
       , [ "target properties"
         , {"type": "CALL_EXPRESSION", "name": "target properties"}
         ]
+      , [ "action_label",
+          { "type": "join"
+          , "$1": ["Running test ", {"type": "var", "name": "name"}]
+          }
+        ]
       ]
     , "body":
       { "type": "if"
@@ -200,6 +205,7 @@
                 ]
               , "inputs": {"type": "var", "name": "test input"}
               , "cmd": ["./runner"]
+              , "label": {"type": "var", "name": "action_label"}
               , "env":
                 { "type": "var"
                 , "name": "TEST_ENV"
@@ -265,6 +271,7 @@
                         ]
                       }
                     , "cmd": ["./runner"]
+                    , "label": {"type": "var", "name": "action_label"}
                     , "env":
                       { "type": "var"
                       , "name": "TEST_ENV"
@@ -345,6 +352,7 @@
               , "outs":
                 ["stdout", "stderr", "result", "time-start", "time-stop"]
               , "cmd": ["./summarizer"]
+              , "label": "Summarize test reports"
               , "execution properties":
                 { "type": "var"
                 , "name": "TEST_SUMMARY_EXECUTION_PROPERTIES"

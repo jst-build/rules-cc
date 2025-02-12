@@ -433,6 +433,13 @@
             }
           ]
         }
+      , "label":
+        { "type": "join"
+        , "$1":
+          [ "Building Make "
+          , {"type": "join_cmd", "$1": {"type": "var", "name": "make_targets"}}
+          ]
+        }
       , "out_dirs": ["install"]
       , "env": {"type": "var", "name": "ENV"}
       , "timeout scaling":

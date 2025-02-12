@@ -347,6 +347,31 @@
               ]
             }
           , "cmd": [{"type": "var", "name": "sh"}, "run_cmds.sh"]
+          , "label":
+            { "type": "join"
+            , "$1":
+              [ "Building Shell "
+              , { "type": "join_cmd"
+                , "$1":
+                  { "type": "keys"
+                  , "$1":
+                    { "type": "from_subdir"
+                    , "subdir": "install"
+                    , "$1":
+                      { "type": "set"
+                      , "$1":
+                        { "type": "++"
+                        , "$1":
+                          [ {"type": "var", "name": "installed_files"}
+                          , {"type": "var", "name": "installed_dirs"}
+                          ]
+                        }
+                      }
+                    }
+                  }
+                }
+              ]
+            }
           , "outs": {"type": "var", "name": "installed_files"}
           , "out_dirs": {"type": "var", "name": "installed_dirs"}
           , "env": {"type": "var", "name": "ENV"}

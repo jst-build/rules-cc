@@ -472,6 +472,13 @@
           , {"type": "var", "name": "CMAKE_FLAGS"}
           ]
         }
+      , "label":
+        { "type": "join"
+        , "$1":
+          [ "Building CMake "
+          , {"type": "join_cmd", "$1": {"type": "var", "name": "cmake_targets"}}
+          ]
+        }
       , "out_dirs": ["install"]
       , "env": {"type": "var", "name": "ENV"}
       , "timeout scaling":

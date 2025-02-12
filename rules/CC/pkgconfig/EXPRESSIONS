@@ -186,6 +186,10 @@
                   }
                 }
               ]
+            , "label":
+              { "type": "join"
+              , "$1": ["Reading cflags ", {"type": "var", "name": "name"}]
+              }
             , "env": {"type": "var", "name": "ENV"}
             , "outs": [{"type": "var", "name": "cflags-filename"}]
             }
@@ -229,6 +233,10 @@
                 }
               }
             ]
+          , "label":
+            { "type": "join"
+            , "$1": ["Reading ldflags ", {"type": "var", "name": "name"}]
+            }
           , "env": {"type": "var", "name": "ENV"}
           , "outs": ["ldflags.raw"]
           }
@@ -266,6 +274,10 @@
                   ]
                 }
               ]
+            , "label":
+              { "type": "join"
+              , "$1": ["Reading ldflags ", {"type": "var", "name": "name"}]
+              }
             , "env": {"type": "var", "name": "ENV"}
             , "outs": [{"type": "var", "name": "ldflags-filename"}]
             }

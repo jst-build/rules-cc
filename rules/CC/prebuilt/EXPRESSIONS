@@ -338,6 +338,15 @@
                   , {"type": "var", "name": "pc-args"}
                   ]
                 }
+              , "label":
+                { "type": "join"
+                , "$1":
+                  [ "Reading cflags "
+                  , { "type": "basename"
+                    , "$1": {"type": "var", "name": "main-pkg-config"}
+                    }
+                  ]
+                }
               , "env": {"type": "var", "name": "ENV"}
               , "outs": [{"type": "var", "name": "cflags-filename"}]
               }
@@ -402,6 +411,15 @@
                     , {"type": "var", "name": "main-pkg-config"}
                     ]
                   , {"type": "var", "name": "pc-args"}
+                  ]
+                }
+              , "label":
+                { "type": "join"
+                , "$1":
+                  [ "Reading ldflags "
+                  , { "type": "basename"
+                    , "$1": {"type": "var", "name": "main-pkg-config"}
+                    }
                   ]
                 }
               , "env": {"type": "var", "name": "ENV"}

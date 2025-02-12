@@ -274,6 +274,21 @@
               ]
             }
           , "cmd": [{"type": "var", "name": "sh"}, "-c", ":"]
+          , "label":
+            { "type": "join"
+            , "$1":
+              [ "Extracting Make "
+              , { "type": "join_cmd"
+                , "$1":
+                  { "type": "++"
+                  , "$1":
+                    [ {"type": "FIELD", "name": "out_files"}
+                    , {"type": "FIELD", "name": "out_dirs"}
+                    ]
+                  }
+                }
+              ]
+            }
           , "outs": {"type": "var", "name": "installed_out_files"}
           , "out_dirs": {"type": "var", "name": "installed_out_dirs"}
           }
@@ -727,6 +742,21 @@
               ]
             }
           , "cmd": [{"type": "var", "name": "sh"}, "-c", ":"]
+          , "label":
+            { "type": "join"
+            , "$1":
+              [ "Extracting Make "
+              , { "type": "join_cmd"
+                , "$1":
+                  { "type": "++"
+                  , "$1":
+                    [ {"type": "FIELD", "name": "out_files"}
+                    , {"type": "FIELD", "name": "out_dirs"}
+                    ]
+                  }
+                }
+              ]
+            }
           , "outs": {"type": "var", "name": "installed_files"}
           , "out_dirs": {"type": "var", "name": "installed_dirs"}
           }

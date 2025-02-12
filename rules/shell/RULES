@@ -302,6 +302,7 @@
               ]
             }
           , "cmd": [{"type": "var", "name": "sh"}, "cmd"]
+          , "label": "Running shell commands"
           , "outs": {"type": "var", "name": "outs in WRKDIR"}
           , "out_dirs": {"type": "var", "name": "out_dirs in WRKDIR"}
           , "env": {"type": "var", "name": "env"}
