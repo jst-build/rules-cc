@@ -46,12 +46,21 @@ For interoperability with CMake projects, see
 - [consume CMake libraries](./doc/consume-cmake-libraries.md)
 - [being consumed by CMake](./doc/being-consumed-by-cmake.md)
 
+## Debug fission
+
+The C/C++ rules have support for debug fission, which splits the debug symbols
+of each compilation unit into separate artifacts, with several benefits in terms
+of artifact caching, distribution, and build time.
+
+For more details regarding this feature, see
+[debug fission support](./doc/debug-fission.md).
+
 ## Rule Documentation
 
 In this documentation, the standard configuration variables
 `"AR"`, `"CC"`, `"CXX"`, `"CFLAGS"`, `"CXXFLAGS"`,`"LDFLAGS"`,
 `"ADD_CFLAGS"`, `"ADD_CXXFLAGS"`, `"ADD_LDFLAGS"`, `"ENV"`,
-`"BUILD_POSITION_INDEPENDENT"` are ommitted.
+`"BUILD_POSITION_INDEPENDENT"` are omitted.
 
 ### Rule `["CC", "defaults"]`
 
@@ -271,7 +280,7 @@ A test written in C++
 
 A rule to provide defaults for the usage of the shell 
 
- All targets using invocations of the shell use the target `["shel", "defaults"]` to determine which shell to use and how to invoke it. The definition of this default target is probably the only meaningful use of this rule.
+ All targets using invocations of the shell use the target `["shell", "defaults"]` to determine which shell to use and how to invoke it. The definition of this default target is probably the only meaningful use of this rule.
 
 | Field | Description |
 | ----- | ----------- |
@@ -283,16 +292,16 @@ A rule to provide defaults for the usage of the shell
 
 ### Rule `["shell", "cmds"]`
 
-Execute comands using the shell 
+Execute commands using the shell 
 
  This rule behaves similar to the built-in `"generic"` rule, however with the difference that the shell toolchain is honored.
 
 | Field | Description |
 | ----- | ----------- |
-| `"cmds"` | The command to be executed. Individual entries are joined by newline characters; the whole script is then prefixed by commands necessary to set up the work environment using the shell tool chain. |
+| `"cmds"` | The command to be executed. Individual entries are joined by newline characters; the whole script is then prefixed by commands necessary to set up the work environment using the shell toolchain. |
 | `"outs"` | The expected file outputs |
 | `"out_dirs"` | The expected output directories |
-| `"deps"` | Any  inputs to the argument. Both, artifacts and rufiles of the dependecies are staged into the (effective) working directory of the action. Conflicts are resolved by giving artifacts priority to runfiles, and within each of those priority to ones brought by the latest dependency. |
+| `"deps"` | Any  inputs to the argument. Both, artifacts and runfiles of the dependencies are staged into the (effective) working directory of the action. Conflicts are resolved by giving artifacts priority to runfiles, and within each of those priority to ones brought by the latest dependency. |
 
 ### Rule `["shell/test", "script"]`
 
@@ -308,7 +317,7 @@ Shell test, given by a test script
 
 | Config variable | Description |
 | --------------- | ----------- |
-| `"RUNS_PER_TEST"` | The number of times the test should be run in order to detect flakyness. If set, no test action will be taken from cache.  The individual test runs will be summarized by the implict dependency on the target `"summarizer"`. By setting this target in the target in the target layer of this rues repository (instead of letting it default to the respective file) the layout of the summary can be changed globally. |
+| `"RUNS_PER_TEST"` | The number of times the test should be run in order to detect flakyness. If set, no test action will be taken from cache.  The individual test runs will be summarized by the implicit dependency on the target `"summarizer"`. By setting this target in the target in the target layer of this rues repository (instead of letting it default to the respective file) the layout of the summary can be changed globally. |
 | `"TEST_ENV"` | Additional environment for executing the test runner. |
 | `"TIMEOUT_SCALE"` | Factor on how to scale the timeout for this test. Defaults to 1.0. |
 | `"TARGET_ARCH"` | The architecture to build the test for.  Will only be honored, if that architecture is available in the ARCH_DISPATCH map. Otherwise, the test will be built for and run on the host architecture. |
@@ -388,7 +397,7 @@ Library produced by Configure and Make build and install.
 | `"version"` | The library version, used for pkg-config files. Individual version components are joined with `"."`. |
 | `"stage"` | The logical location of the public headers and library files. Individual directory components are joined with `"/"`. |
 | `"configure"` | Run ./configure if non-empty. |
-| `"configure_options"` | The configure options (the `"--prefix"` option is automatically set. |
+| `"configure_options"` | The configure options (the `"--prefix"` option is automatically set). |
 | `"targets"` | The Make targets to build in the specified order (default: `["install"]`). |
 | `"prefix"` | The prefix used for the Make target. The path will be made absolute and individual directory components are joined with `"/"`. If no prefix is specified, the value from the config variable `"PREFIX"` is taken, with the default value being `"/"`. |
 | `"options"` | Make options for the build phase. (e.g., `["-f", "Makefile", "ARCH=x86"]`) |
@@ -424,7 +433,7 @@ Data produced by Configure and Make build and install.
 | ----- | ----------- |
 | `"subdir"` | The subdirectory that contains the configure and Makefile. Individual directory components are joined with `"/"`. |
 | `"configure"` | Run ./configure if non-empty. |
-| `"configure_options"` | The configure options (the `"--prefix"` option is automatically set. Variables can be accessed via `"$(<varname>)"`, e.g., `"$(TMPDIR)"` for variable `"$TMPDIR"`. |
+| `"configure_options"` | The configure options (the `"--prefix"` option is automatically set). Variables can be accessed via `"$(<varname>)"`, e.g., `"$(TMPDIR)"` for variable `"$TMPDIR"`. |
 | `"targets"` | The Make targets to build in the specified order (default: `["install"]`). |
 | `"prefix"` | The prefix used for the Make target. The path will be made absolute and individual directory components are joined with `"/"`. If no prefix is specified, the value from the config variable `"PREFIX"` is taken, with the default value being `"/"`. |
 | `"options"` | Make options for the configuration phase (e.g., `["-f", "Makefile", "ARCH=x86", "LD=$(CC)"]`). Variables can be accessed via `"$(<varname>)"`, e.g., `"$(TMPDIR)"` for variable `"$TMPDIR"`. |

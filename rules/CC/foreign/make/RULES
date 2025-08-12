@@ -55,7 +55,7 @@
       ]
     , "configure": ["Run ./configure if non-empty."]
     , "configure_options":
-      [ "The configure options (the \"--prefix\" option is automatically set."
+      [ "The configure options (the \"--prefix\" option is automatically set)."
       , "Variables can be accessed via \"$(<varname>)\", e.g., \"$(TMPDIR)\""
       , "for variable \"$TMPDIR\"."
       ]
@@ -181,6 +181,7 @@
     , "for host": ["transitions", "for host"]
     , "map_provider": ["", "field_map_provider"]
     , "sh": ["shell", "sh"]
+    , "sh-PATH": ["shell", "PATH"]
     }
   , "config_transitions":
     { "defaults":
@@ -264,6 +265,27 @@
           , "body": {"type": "CALL_EXPRESSION", "name": "sh"}
           }
         ]
+      , [ "sh-PATH"
+        , { "type": "join"
+          , "separator": ":"
+          , "$1":
+            { "type": "let*"
+            , "bindings": [["fieldname", "shell defaults"]]
+            , "body": {"type": "CALL_EXPRESSION", "name": "sh-PATH"}
+            }
+          }
+        ]
+      , [ "sh-ENV"
+        , { "type": "if"
+          , "cond": {"type": "var", "name": "sh-PATH"}
+          , "then":
+            { "type": "singleton_map"
+            , "key": "PATH"
+            , "value": {"type": "var", "name": "sh-PATH"}
+            }
+          , "else": {"type": "empty_map"}
+          }
+        ]
       , [ "install_dir"
         , { "type": "ACTION"
           , "inputs":
@@ -291,6 +313,16 @@
             }
           , "outs": {"type": "var", "name": "installed_out_files"}
           , "out_dirs": {"type": "var", "name": "installed_out_dirs"}
+          , "env":
+            { "type": "map_union"
+            , "$1":
+              [ {"type": "var", "name": "sh-ENV"}
+              , { "type": "var"
+                , "name": "ENV"
+                , "default": {"type": "empty_map"}
+                }
+              ]
+            }
           }
         ]
       , [ "out_files"
@@ -405,7 +437,7 @@
       ]
     , "configure": ["Run ./configure if non-empty."]
     , "configure_options":
-      ["The configure options (the \"--prefix\" option is automatically set."]
+      ["The configure options (the \"--prefix\" option is automatically set)."]
     , "targets":
       [ "The Make targets to build in the specified order"
       , "(default: [\"install\"])."
@@ -561,6 +593,7 @@
     , "for host": ["transitions", "for host"]
     , "map_provider": ["", "field_map_provider"]
     , "sh": ["shell", "sh"]
+    , "sh-PATH": ["shell", "PATH"]
     }
   , "config_transitions":
     { "defaults":
@@ -732,6 +765,27 @@
           , "body": {"type": "CALL_EXPRESSION", "name": "sh"}
           }
         ]
+      , [ "sh-PATH"
+        , { "type": "join"
+          , "separator": ":"
+          , "$1":
+            { "type": "let*"
+            , "bindings": [["fieldname", "shell defaults"]]
+            , "body": {"type": "CALL_EXPRESSION", "name": "sh-PATH"}
+            }
+          }
+        ]
+      , [ "sh-ENV"
+        , { "type": "if"
+          , "cond": {"type": "var", "name": "sh-PATH"}
+          , "then":
+            { "type": "singleton_map"
+            , "key": "PATH"
+            , "value": {"type": "var", "name": "sh-PATH"}
+            }
+          , "else": {"type": "empty_map"}
+          }
+        ]
       , [ "install_dir"
         , { "type": "ACTION"
           , "inputs":
@@ -759,6 +813,16 @@
             }
           , "outs": {"type": "var", "name": "installed_files"}
           , "out_dirs": {"type": "var", "name": "installed_dirs"}
+          , "env":
+            { "type": "map_union"
+            , "$1":
+              [ {"type": "var", "name": "sh-ENV"}
+              , { "type": "var"
+                , "name": "ENV"
+                , "default": {"type": "empty_map"}
+                }
+              ]
+            }
           }
         ]
       , [ "hdrs"
