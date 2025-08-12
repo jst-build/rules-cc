@@ -4,35 +4,30 @@ A collection of rules for building C/C++ libraries and binaries.
 
 ## How to use this Repository
 
-There are two ways to import this repository. You can generate your
-`repos.json` from a template (`repos.template.json`) by importing
-the `rules-cc` repository with the tool `just-import-git`
+To import `rules-cc` to your repository, add the following code to the *imports
+section* of your `repos.in.json` and run `just-lock` to generate the final
+repository lock-file
 
-~~~sh
-$ just-import-git -C repos.template.json --as rules-cc -b master https://github.com/just-buildsystem/rules-cc > repos.json
+~~~jsonc
+"imports": [
+  {
+    "source": "git",
+    "branch": "master",
+    "url": "https://github.com/just-buildsystem/rules-cc",
+    "repos": [{"repo": "rules with bundled tools", "alias": "rules-cc"}]
+  },
+  // ...
+],
 ~~~
 
+There are two rule repositories available for import:
+
+1. `"rules with bundled tools"`:
 Importing this way will also pull in `protoc` and `grpc_cpp_plugin`
 as a dependency for generating bindings for proto dependencies, if
 this feature is used.
 
-Alternatively, the `rules-cc` repository can be added manually to
-your `repos.json`.
-
-~~~jsonc
-...
-  , "rules-cc":
-    { "repository":
-      { "type": "git"
-      , "branch": "master"
-      , "commit": "3a5f0f0f50c59495ffc3b198df59e6edb8416450"
-      , "repository": "https://github.com/just-buildsystem/rules-cc"
-      , "subdir": "rules"
-      }
-    }
-...
-~~~
-
+2. `"rules"`:
 Importing this way, `protoc` and `grpc_cpp_plugin` will be taken
 from the host system. To change the binary names or to bring your
 own proto toolchain, add a corresponding `target_root` layer (and

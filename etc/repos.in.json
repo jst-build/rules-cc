@@ -1,4 +1,11 @@
 { "main": "rules with bundled tools"
+, "imports":
+  [ { "source": "git"
+    , "url": "https://github.com/just-buildsystem/justbuild"
+    , "branch": "v1.5.2"
+    , "repos": [{"repo": "just"}]
+    }
+  ]
 , "repositories":
   { "rules": {"repository": {"type": "file", "path": "rules"}}
   , "rules with bundled tools":
