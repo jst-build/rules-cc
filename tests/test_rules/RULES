@@ -221,6 +221,10 @@
             }
           , "outs": ["stdout", "stderr", "result", "time-start", "time-stop"]
           , "cmd": ["./runner"]
+          , "label":
+            { "type": "join"
+            , "$1": ["Running rule test ", {"type": "var", "name": "name"}]
+            }
           , "may_fail": ["test"]
           , "fail_message":
             { "type": "join"
