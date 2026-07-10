@@ -1,11 +1,11 @@
-# C/C++ rules for the `just` build system
+# C/C++ rules for the `jst` build system
 
 A collection of rules for building C/C++ libraries and binaries.
 
 ## How to use this Repository
 
 To import `rules-cc` to your repository, add the following code to the *imports
-section* of your `repos.in.json` and run `just-lock` to generate the final
+section* of your `repos.in.json` and run `jst-lock` to generate the final
 repository lock-file
 
 ~~~jsonc
@@ -13,26 +13,12 @@ repository lock-file
   {
     "source": "git",
     "branch": "master",
-    "url": "https://github.com/just-buildsystem/rules-cc",
-    "repos": [{"repo": "rules with bundled tools", "alias": "rules-cc"}]
+    "url": "https://github.com/jst-build/rules-cc",
+    "repos": [{"alias": "rules-cc"}]
   },
   // ...
 ],
 ~~~
-
-There are two rule repositories available for import:
-
-1. `"rules with bundled tools"`:
-Importing this way will also pull in `protoc` and `grpc_cpp_plugin`
-as a dependency for generating bindings for proto dependencies, if
-this feature is used.
-
-2. `"rules"`:
-Importing this way, `protoc` and `grpc_cpp_plugin` will be taken
-from the host system. To change the binary names or to bring your
-own proto toolchain, add a corresponding `target_root` layer (and
-provide the needed binding, if your target files refer to other
-repositories containing the toolchain).
 
 ## Consume and being consumed by CMake Libraries
 

@@ -1,4 +1,4 @@
-{ "main": "rules with bundled tools"
+{ "main": "rules"
 , "imports":
   [ { "source": "git"
     , "url": "https://github.com/just-buildsystem/justbuild"
@@ -8,16 +8,6 @@
   ]
 , "repositories":
   { "rules": {"repository": {"type": "file", "path": "rules"}}
-  , "rules with bundled tools":
-    { "repository": "rules"
-    , "target_root": "defaults"
-    , "rule_root": "rules"
-    , "bindings":
-      { "base": "just/rules"
-      , "protoc": "just/protobuf"
-      , "grpc": "just/com_github_grpc_grpc"
-      }
-    }
   , "defaults": {"repository": {"type": "file", "path": "etc/defaults"}}
   , "tests":
     { "repository": {"type": "file", "path": "tests"}
