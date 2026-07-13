@@ -1,19 +1,11 @@
 { "main": "rules"
-, "imports":
-  [ { "source": "git"
-    , "url": "https://github.com/just-buildsystem/justbuild"
-    , "branch": "v1.5.2"
-    , "repos": [{"repo": "just"}]
-    }
-  ]
 , "repositories":
   { "rules": {"repository": {"type": "file", "path": "rules"}}
   , "defaults": {"repository": {"type": "file", "path": "etc/defaults"}}
   , "tests":
     { "repository": {"type": "file", "path": "tests"}
     , "bindings":
-      { "test-just": "just"
-      , "test-rules": "test-rules"
+      { "test-rules": "test-rules"
       , "test-libs": "test-libs"
       , "rules": "rules"
       }

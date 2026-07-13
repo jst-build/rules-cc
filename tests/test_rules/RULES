@@ -3,7 +3,7 @@
     [ "Define a test case for rule tests."
     , "The config variables \"ENV\", \"ARCH\", \"HOST_ARCH\", \"TARGET_ARCH\","
     , "\"BUILD_ARCH\", \"OS\" are collected in a file named \"conf_vars.json\"."
-    , "The test runner will pass that file as argument to \"-c\" to the \"just\""
+    , "The test runner will pass that file as argument to \"-c\" to the \"jst\""
     , "binary, which is internally called."
     ]
   , "string_fields": ["name", "libs", "targets", "asserts"]
@@ -42,7 +42,6 @@
   , "implicit":
     { "runner": ["test_runner.py"]
     , "rules": [["@", "test-rules", "", "tree"]]
-    , "just": [["@", "test-just", "", ""]]
     , "libs_tree": [["@", "test-libs", "", "tree"]]
     }
   , "imports": {"stage_artifact": "stage_singleton_field"}
@@ -50,9 +49,6 @@
     { "type": "let*"
     , "bindings":
       [ ["name", {"type": "join", "$1": {"type": "FIELD", "name": "name"}}]
-      , ["fieldname", "just"]
-      , ["location", "bin/just"]
-      , ["just", {"type": "CALL_EXPRESSION", "name": "stage_artifact"}]
       , ["fieldname", "rules"]
       , ["location", "rules"]
       , ["rules", {"type": "CALL_EXPRESSION", "name": "stage_artifact"}]
@@ -210,7 +206,6 @@
             , "$1":
               [ {"type": "var", "name": "runner"}
               , {"type": "var", "name": "rules"}
-              , {"type": "var", "name": "just"}
               , {"type": "var", "name": "imports"}
               , {"type": "var", "name": "libs"}
               , {"type": "var", "name": "repos"}
@@ -230,6 +225,8 @@
             { "type": "join"
             , "$1": ["Rule test ", {"type": "var", "name": "name"}, " failed"]
             }
+          , "env":
+            {"type": "var", "name": "ENV", "default": {"type": "empty_map"}}
           }
         ]
       ]
