@@ -3825,7 +3825,7 @@
               ]
             , {"type": "var", "name": "compile flags"}
             , {"type": "var", "name": "link-args"}
-            , {"type": "var", "name": "run-libs-args"}
+            , {"type": "var", "name": "run-libs-args", "default": []}
             , {"type": "var", "name": "ld flags"}
             ]
           }
@@ -3844,7 +3844,10 @@
                   , "$1":
                     [ {"type": "var", "name": "objects"}
                     , {"type": "var", "name": "link-deps"}
-                    , {"type": "var", "name": "run-libs"}
+                    , { "type": "var"
+                      , "name": "run-libs"
+                      , "default": {"type": "empty_map"}
+                      }
                     , { "type": "var"
                       , "name": "cflags-files"
                       , "default": {"type": "empty_map"}
