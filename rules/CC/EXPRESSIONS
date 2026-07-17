@@ -1747,7 +1747,20 @@
             { "type": "VALUE_NODE"
             , "$1":
               { "type": "RESULT"
-              , "artifacts": {"type": "var", "name": "all hdrs"}
+              , "artifacts":
+                { "type": "map_union"
+                , "$1":
+                  [ {"type": "var", "name": "all hdrs"}
+                  , { "type": "var"
+                    , "name": "cflags-files"
+                    , "default": {"type": "empty_map"}
+                    }
+                  , { "type": "var"
+                    , "name": "TOOLCHAIN"
+                    , "default": {"type": "empty_map"}
+                    }
+                  ]
+                }
               , "provides":
                 { "type": "let*"
                 , "bindings":
