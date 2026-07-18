@@ -199,6 +199,9 @@
           }
         ]
       , ["pure C", {"type": "FIELD", "name": "pure C"}]
+      , ["private-defines", {"type": "FIELD", "name": "private-defines"}]
+      , ["private-cflags", {"type": "FIELD", "name": "private-cflags"}]
+      , ["private-ldflags", {"type": "FIELD", "name": "private-ldflags"}]
       , [ "stage"
         , { "type": "join"
           , "separator": "/"
