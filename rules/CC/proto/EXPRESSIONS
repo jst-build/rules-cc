@@ -482,7 +482,7 @@
           }
         ]
       , ["cflags", []]
-      , ["private-cflags", []]
+      , ["private-cflags", ["-w"]]
       , [ "private-ldflags"
         , {"type": "CALL_EXPRESSION", "name": "default-LDFLAGS"}
         ]
